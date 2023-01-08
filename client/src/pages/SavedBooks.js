@@ -43,7 +43,17 @@ const SavedBooks = () => {
 
   const handleTradeBook = async (bookId) => {
     console.log("trade", bookId);
-    // TODO: add ability to make book tradeable
+    // TODO: add functionality to make book tradeable
+  }
+
+  const findUsersWithBook = async (bookId) => {
+    console.log("findUsersWithBook", bookId)
+    // TODO: add functionality to find users with this book
+  }
+  
+  const deleteBookFromWishList = async (bookId) => {
+    console.log("deleteBookFromWishList", bookId)
+    // TODO: add functionality to remove this book from wishlist
   }
 
   // if data isn't here yet, say so
@@ -80,7 +90,7 @@ const SavedBooks = () => {
             {/* TODO: change savedBooks to wishlist with backend support */}
             <h3>Your Wishlist</h3>
             {userData.savedBooks.map((book) => {
-              return <Book book={book} context="wishList">book</Book>;
+              return <Book book={book} context="wishList" findUsersWithBook={findUsersWithBook} deleteBookFromWishList={deleteBookFromWishList}>book</Book>;
             })}
           </div>
         </div>

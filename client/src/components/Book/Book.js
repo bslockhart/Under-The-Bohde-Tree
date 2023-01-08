@@ -14,7 +14,9 @@ export default function Book({
   savedBookIds,
   setSavedBookIds,
   handleDeleteBook,
-  handleTradeBook
+  handleTradeBook,
+  findUsersWithBook,
+  deleteBookFromWishList
 }) {
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
@@ -69,12 +71,14 @@ export default function Book({
         <div className="btns">
           {Auth.loggedIn() && context === "library" ? (
             <>
-
-              <Button className="btn-block btn-danger" onClick={() => handleDeleteBook(book.bookId)}>
-                DeleteBook
-              </Button>
               <Button className="btn-block btn-info" onClick={handleTradeBook}>
                 available to trade
+              </Button>
+              <Button
+                className="btn-block btn-danger"
+                onClick={() => handleDeleteBook(book.bookId)}
+              >
+                DeleteBook
               </Button>
             </>
           ) : Auth.loggedIn && context === "search" ? (
@@ -91,6 +95,15 @@ export default function Book({
                 )
                   ? "This book has already been saved!"
                   : "Save this Book!"}
+              </Button>
+            </>
+          ) : Auth.loggedIn && context === "wishList" ? (
+            <>
+              <Button className="btn-block btn-info" onClick={() => findUsersWithBook(book.bookId)}>
+                find book
+              </Button>
+              <Button className="btn-block btn-danger"onClick={() => deleteBookFromWishList(book.bookId)}>
+                remove from wishlist
               </Button>
             </>
           ) : (
