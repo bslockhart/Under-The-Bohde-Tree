@@ -71,7 +71,7 @@ export default function Book({
         <div className="btns">
           {Auth.loggedIn() && context === "library" ? (
             <>
-              <Button className="btn-block btn-info" onClick={handleTradeBook}>
+              <Button className="btn-block btn-info" onClick={() => handleTradeBook(book.bookId)}>
                 available to trade
               </Button>
               <Button
