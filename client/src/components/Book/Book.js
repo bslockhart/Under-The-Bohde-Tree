@@ -3,7 +3,19 @@ import "./Book.css";
 import { Button } from "react-bootstrap";
 import Auth from "../../utils/auth";
 
-export default function Book({ book, rating, setRating, searchedBooks, setSearchedBooks, saveBook, savedBookIds, setSavedBookIds }) {
+export default function Book({
+  context,
+  book,
+  rating,
+  setRating,
+  searchedBooks,
+  setSearchedBooks,
+  saveBook,
+  savedBookIds,
+  setSavedBookIds,
+  handleDeleteBook,
+  handleTradeBook
+}) {
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
@@ -53,23 +65,36 @@ export default function Book({ book, rating, setRating, searchedBooks, setSearch
             })}
           </h4>
         </div>
+        {/* Render different buttons depending on the context in which the card is called */}
         <div className="btns">
+          {Auth.loggedIn() && context === "library" ? (
+            <>
 
-          <Button className="btn-block btn-info"onClick={() => addToWishlist(book.bookId)}>
-            add to Wishlist
-          </Button>
-          {Auth.loggedIn() && (
-            <Button
-              disabled={savedBookIds?.some(
-                (savedBookId) => savedBookId === book.bookId
-              )}
-              className="btn-block btn-info"
-              onClick={() => handleSaveBook(book.bookId)}
-            >
-              {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                ? "This book has already been saved!"
-                : "Save this Book!"}
-            </Button>
+              <Button className="btn-block btn-danger" onClick={() => handleDeleteBook(book.bookId)}>
+                DeleteBook
+              </Button>
+              <Button className="btn-block btn-info" onClick={handleTradeBook}>
+                available to trade
+              </Button>
+            </>
+          ) : Auth.loggedIn && context === "search" ? (
+            <>
+              <Button
+                disabled={savedBookIds?.some(
+                  (savedBookId) => savedBookId === book.bookId
+                )}
+                className="btn-block btn-info"
+                onClick={() => handleSaveBook(book.bookId)}
+              >
+                {savedBookIds?.some(
+                  (savedBookId) => savedBookId === book.bookId
+                )
+                  ? "This book has already been saved!"
+                  : "Save this Book!"}
+              </Button>
+            </>
+          ) : (
+            ""
           )}
         </div>
       </div>
