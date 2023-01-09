@@ -1,8 +1,17 @@
+
+
 import React, { useState } from "react";
+import { Modal } from '../Modal'
 import './Book.css';
-// import Auth from "../utils/auth";
 
 export default function Book({ book, rating, setRating }) {
+
+  const [showModal, setShowModal] = useState(false); // added state to track if modal is open or closed
+
+  const openModal = () => {
+    setShowModal(prev => !prev)
+  }
+
   const handleRating = (rate) => {
     setRating(rate);
     console.log(book)
@@ -13,9 +22,13 @@ export default function Book({ book, rating, setRating }) {
   const addToWishlist = (id) => {
     console.log(id, 'Wishlist')
   }
+
   return (
     <div className="book">
-      <img alt={`${book.title} cover`} src={book.image} />
+        {/* <container>
+            <button>I'm A MODAL</button>
+        </container> */}
+      <img alt={`${book.title} cover`} src={book.image} onClick={openModal} /> {/* added onClick event handler */}
       <div className="book__content">
         <div className="book__info">
           <h2>
@@ -45,6 +58,7 @@ export default function Book({ book, rating, setRating }) {
                       )} */}
         </div>
       </div>
+      {showModal && <Modal showModal={setShowModal} />}
     </div>
   );
 }
