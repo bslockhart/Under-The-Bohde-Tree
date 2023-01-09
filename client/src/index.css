@@ -1,17 +1,107 @@
-body {
-  font-family: 'Rubik', sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Karla:wght@300;400;500;600;700&display=swap");
+
+@layer base {
+  body {
+    @apply bg-stars;
+    @apply bg-repeat-x;
+    @apply bg-top;
+    @apply z-[-1];
+    @apply bg-[#22274f];
+    @apply font-['Karla'];
+    @apply text-gray-200;
+    @apply text-lg;
+    @apply leading-loose;
+  }
+
+  h1 {
+    @apply font-['Poppins'];
+    @apply text-[#6bfbce];
+    @apply font-medium;
+  }
+
+  h2,
+  h3 {
+    @apply font-['Poppins'];
+    @apply text-[#6bfbce];
+  }
+
+  a,
+  a:active,
+  a:visited {
+    @apply text-[#6bfbce];
+    @apply transition-all;
+    @apply ease-in;
+    @apply duration-300;
+  }
+
+  a:hover {
+    @apply text-[#7286ff];
+  }
+
+  button {
+    @apply bg-[#7C87f2];
+    @apply uppercase;
+    @apply text-white;
+    @apply tracking-widest;
+    @apply transition-all;
+    @apply ease-in;
+    @apply duration-300;
+  }
+
+  button:hover {
+    @apply bg-indigo-600;
+  }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+button,
+a,
+span,
+select,
+li,
+label,
+textarea,
+input {
+  font-family: poppins, sans-serif;
 }
 
-.small {
-  font-weight: 300;
-  font-style: italic;
+div.Dropdown-menu {
+  @apply bg-slate-700;
+  @apply text-yellow-100;
+  @apply border-slate-600;
+}
+
+div.Dropdown-control {
+  @apply bg-slate-700;
+  @apply text-yellow-100;
+  @apply font-semibold;
+  @apply border-slate-600;
+}
+
+div.Dropdown-option {
+  @apply bg-slate-700;
+  @apply text-yellow-100;
+  @apply text-base;
+  @apply font-semibold;
+}
+
+div.Dropdown-option.is-selected {
+  @apply bg-slate-900;
+  @apply text-yellow-100;
+  @apply font-semibold;
+}
+
+div.Dropdown-option:hover {
+  @apply bg-slate-900;
+  @apply text-yellow-100;
+  @apply font-semibold;
+}
+
+span svg.star-svg {
+  @apply inline-flex;
+  @apply w-5;
+  @apply h-5;
 }

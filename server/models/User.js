@@ -1,40 +1,69 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
-
-// import schema from Book.js
-const bookSchema = require('./Book');
+const { Schema, model, Types } = require("mongoose");
+const bcrypt = require("bcryptjs");
+//const jwt = require('jsonwebtoken');
+//const crypto = require('crypto');
+//import book schema
+// const bookSchema = require('./Book');
 
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
       unique: true,
+      required: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
+      validate: {
+        validator: function (v) {
+          return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(v);
+        },
+        message: (props) =>
+          `${props.value} Please enter a valid email address!`,
+      },
     },
     password: {
       type: String,
       required: true,
+      minlength: 5,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    savedBooks: [
+      {
+        bookId: String,
+        authors: [String],
+        description: String,
+        title: String,
+        image: String,
+      },
+    ],
   },
-  // set this to use virtual below
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
   }
 );
 
-// hash user password
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+//hash user password for security
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -42,16 +71,15 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// custom method to compare and validate password for logging in
+//validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
 });
 
-const User = model('User', userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

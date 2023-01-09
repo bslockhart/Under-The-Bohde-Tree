@@ -1,29 +1,64 @@
 {
-  "name": "book-search-engine",
+  "name": "book-swap",
   "version": "1.0.0",
-  "engines": {
-    "node": "16.x"
-  },
   "description": "",
-  "main": "server/server.js",
+  "main": "index.js",
+  "dependencies": {
+    "@apollo/client": "^3.7.1",
+    "ansi-regex": "^5.0.1",
+    "ansi-styles": "^4.3.0",
+    "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.2",
+    "cliui": "^8.0.1",
+    "color-convert": "^2.0.1",
+    "color-name": "^1.1.4",
+    "concurrently": "^7.5.0",
+    "date-fns": "^2.29.3",
+    "emoji-regex": "^8.0.0",
+    "escalade": "^3.1.1",
+    "get-caller-file": "^2.0.5",
+    "graphql": "^16.6.0",
+    "has-flag": "^4.0.0",
+    "is-fullwidth-code-point": "^3.0.0",
+    "lodash": "^4.17.21",
+    "react-anchor-link-smooth-scroll": "^1.0.12",
+    "require-directory": "^2.1.1",
+    "rxjs": "^7.5.7",
+    "shell-quote": "^1.7.4",
+    "spawn-command": "^0.0.2-1",
+    "string-width": "^4.2.3",
+    "strip-ansi": "^6.0.1",
+    "supports-color": "^8.1.1",
+    "tree-kill": "^1.2.2",
+    "tslib": "^2.4.1",
+    "wrap-ansi": "^7.0.0",
+    "y18n": "^5.0.8",
+    "yargs": "^17.6.2",
+    "yargs-parser": "^21.1.1"
+  },
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "cd server && npm start",
-    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
+    "build": "cd client && npm run build",
     "install": "cd server && npm i && cd ../client && npm i",
-    "build": "cd client && npm run build"
+    "heroku-postbuild": "npm run install && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bslockhart/under-the-bohde-tree"
+    "url": "git+https://github.com/bslockhart/Under-The-Bohde-Tree.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "if-env": "^1.0.4"
+  "bugs": {
+    "url": "https://github.com/bslockhart/Under-The-Bohde-Tree/issues"
   },
+  "homepage": "https://github.com/bslockhart/Under-The-Bohde-Tree#readme",
   "devDependencies": {
-    "concurrently": "^5.2.0"
+    "tailwindcss": "^3.2.4"
+  },
+  "engines": {
+    "node": "^v16.16.0"
   }
 }
