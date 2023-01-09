@@ -96,6 +96,9 @@ export default function Book({
                   ? "This book has already been saved!"
                   : "Save this Book!"}
               </Button>
+              <Button className="btn-block btn-info">
+                add to Wishlist
+              </Button>
             </>
           ) : Auth.loggedIn && context === "wishList" ? (
             <>
