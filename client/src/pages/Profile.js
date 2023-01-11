@@ -159,7 +159,7 @@ const Profile = () => {
             <a href="#">
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-md border border-indigo-200 bg-[#22274f] px-4 py-2 text-sm font-medium text-indigo-200 shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                className="inline-flex items-center justify-center rounded-md border border-indigo-200 bg-[#ffc300] px-4 py-2 text-sm font-medium text-[#000814] shadow-sm hover:bg-[#ffc300] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,7 @@ const Profile = () => {
           {/* LIBRARY */}
           <section className="basis-full">
             <div className="mt-8 px-4 sm:px-6">
-              <h2 className="text-4xl text-indigo-300 font-medium drop-shadow">
+              <h2 className="text-4xl text-[#ffc300] font-medium drop-shadow">
                 Library
               </h2>
             </div>
@@ -222,7 +222,7 @@ const Profile = () => {
                                 </div>
                                 <div className="ml-2 flex flex-col justify-evenly">
                                   <button
-                                    className="inline-flex justify-center rounded font-bold py-2 px-4 rounded-full>"
+                                    className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center>"
                                     onClick={() =>
                                       handleDeleteBook(book.bookId)
                                     }
@@ -230,7 +230,7 @@ const Profile = () => {
                                     Remove
                                   </button>
                                   <button
-                                    className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
+                                    className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
                                     onClick={() => handleTrade(book.bookId)}
                                   >
                                       <div className="inline-flex items-center">
@@ -256,7 +256,7 @@ const Profile = () => {
           {/* WISHLIST */}
           <section className="basis-full">
             <div className="mt-8 px-4 sm:px-6">
-              <h2 className="text-4xl text-indigo-300 font-medium drop-shadow">
+              <h2 className="text-4xl text-[#ffc300] font-medium drop-shadow">
                 Wishlist
               </h2>
             </div>
@@ -287,7 +287,7 @@ const Profile = () => {
                                 </div>
                                 <div className="ml-2 flex flex-col justify-evenly">
                                   <button
-                                    className="inline-flex justify-center rounded font-bold py-2 px-4 rounded-full>"
+                                    className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center>"
                                     onClick={() =>
                                       handleRemoveWish(book.bookId)
                                     }
@@ -296,7 +296,7 @@ const Profile = () => {
                                   </button>
                                   <button
                                     onClick={() => handleModal(book)}
-                                    className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex justify-center"
+                                    className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex justify-center"
                                   ><div className="flex items-center justify-center">
                                     Find
                                     </div>
@@ -318,7 +318,7 @@ const Profile = () => {
           {/* TRADE */}
           <section className="basis-full">
             <div className="mt-8 px-4 sm:px-6">
-              <h2 className="text-4xl text-indigo-300 font-medium drop-shadow z-[0]">
+              <h2 className="text-4xl text-[#ffc300] font-medium drop-shadow z-[0]">
                 Willing to Trade
               </h2>
             </div>
@@ -353,7 +353,7 @@ const Profile = () => {
                                   </div>
                                   <div className="ml-2 flex flex-col justify-evenly">
                                     <button
-                                      className="inline-flex justify-center rounded font-bold py-2 px-4 rounded-full>"
+                                      className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex justify-center>"
                                       onClick={() =>
                                         handleRemoveTrade(book.bookId)
                                       }

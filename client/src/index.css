@@ -9,42 +9,41 @@
     @apply bg-repeat-x;
     @apply bg-top;
     @apply z-[-1];
-    @apply bg-[#22274f];
+    @apply bg-[#001d3d];
     @apply font-['Karla'];
-    @apply text-gray-200;
+    @apply text-[#ffc300];
     @apply text-lg;
     @apply leading-loose;
   }
 
   h1 {
     @apply font-['Poppins'];
-    @apply text-[#6bfbce];
+    @apply text-[#ffc300];
     @apply font-medium;
   }
 
   h2,
   h3 {
     @apply font-['Poppins'];
-    @apply text-[#6bfbce];
+    @apply text-[#ffc300];
   }
 
   a,
   a:active,
   a:visited {
-    @apply text-[#6bfbce];
+    @apply text-[#ffc300];
     @apply transition-all;
     @apply ease-in;
     @apply duration-100;
   }
 
   a:hover {
-    @apply text-[#7286ff];
+    @apply text-[#ffc300];
   }
 
   button {
-    @apply bg-[#7C87f2];
     @apply uppercase;
-    @apply text-white;
+    @apply text-[#000814];
     @apply tracking-widest;
     @apply transition-all;
     @apply ease-in;
@@ -52,17 +51,6 @@
   }
 
   button:hover {
-    @apply bg-indigo-600;
+    @apply bg-[#ffd60a];
   }
-}
-
-button,
-a,
-span,
-select,
-li,
-label,
-textarea,
-input {
-  font-family: poppins, sans-serif;
 }

@@ -135,7 +135,7 @@ const Search = () => {
     <>
       <div className="w-[85%] h-auto mx-auto mt-20 flex flex-col justify-center items-center">
         <animated.div style={style1}>
-          <h2 className="text-4xl text-indigo-400 font-medium italic drop-shadow-md">
+          <h2 className="text-4xl text-[#ffc300] font-medium italic drop-shadow-md">
             It Is The Question That Drives Us, Search!
           </h2>
         </animated.div>
@@ -156,7 +156,7 @@ const Search = () => {
                 />
                 <button
                   type="submit"
-                  className="border-2 px-2 rounded border-[#6bfece] text-[#6bfece]"
+                  className="border-2 px-2 rounded border-[#6ffc300] text-[#ffc300]"
                   id="button-addon3"
                 >
                   Search
@@ -199,7 +199,7 @@ const Search = () => {
                     <div className="mt-4 flex items-center gap-2 justify-end">
                       {/* {Auth.loggedIn() && ( */}
                       <button
-                        className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
+                        className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
                         disabled={savedBookIds?.some(
                           (savedBookId) => savedBookId === book.bookId
                         )}
@@ -216,7 +216,7 @@ const Search = () => {
                         )}
                       </button>
                       <button
-                        className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
+                        className="rounded-md border border-[#ffc300] bg-[#ffc300] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
                         disabled={savedBookIds?.some(
                           (savedBookId) => savedBookId === book.bookId
                         )}

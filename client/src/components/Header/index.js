@@ -26,7 +26,7 @@ const Header = () => {
                     <Link to="/profile">Profile</Link>
                     <button
                       onClick={logout}
-                      className="bg-transparent hover:bg-transparent text-[#6bfbce] hover:text-[#7286ff]"
+                      className="bg-transparent hover:bg-transparent text-[#ffc300] hover:text-[#ffc300]"
                     >
                       Logout
                     </button>

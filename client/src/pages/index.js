@@ -1,12 +1,5 @@
 import * as React from "react";
-import { Link } from 'react-router-dom';
 import logo from "../images/bohde_logo.png";
-
-
-// import icons
-import { GiArchiveResearch } from 'react-icons/gi';
-import { WiStars } from "react-icons/wi";
-
 
 const Index = () => {
   return (
