@@ -8,7 +8,6 @@ const bookSchema = new Schema({
   ],
   description: {
     type: String,
-    required: true,
   },
   //saved from googlebooks
   bookId: {

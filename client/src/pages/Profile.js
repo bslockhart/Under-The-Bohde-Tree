@@ -5,13 +5,16 @@ import { useParams, Navigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
 import { QUERY_ME, QUERY_USER } from "../utils/queries";
+import { TOGGLE_TRADE } from "../utils/mutations";
+
 import { REMOVE_BOOK, REMOVE_WISH } from "../utils/mutations";
 import { removeBookId } from "../utils/localStorage";
 // import components
-import RatingStars from "../components/RatingStars";
 import Modal from "../components/modal/Modal";
 
+
 const Profile = () => {
+  const [toggleTradeBool] = useMutation(TOGGLE_TRADE);
   // retrieve user information
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -43,12 +46,12 @@ const Profile = () => {
   const [modalBook, setModalBook] = useState({});
 
   const handleModal = (book) => {
-    console.log('hit')
+    console.log("hit");
     setShowModal(true);
     // setModalProps(book, showModal, setShowModal)
-    setModalBook(book)
+    setModalBook(book);
   };
-  
+
   //add to wishlist
   const handleRemoveWish = async (bookId) => {
     console.log(bookId);
@@ -89,9 +92,46 @@ const Profile = () => {
     );
   }
 
+  const handleTrade = async (bookId) => {
+    console.log(bookId)
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      await toggleTradeBool({
+        variables: { bookId },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const handleRemoveTrade = async (bookId) => {
+    console.log(bookId)
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      await toggleTradeBool({
+        variables: { bookId },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
-    <Modal showModal={showModal} setShowModal={setShowModal} book={modalBook} />
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        book={modalBook}
+      />
       <main className="min-h-full">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
           <div className="flex items-center space-x-5">
@@ -116,7 +156,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="justify-stretch mt-6 flex flex-col-reverse space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-y-0 sm:space-x-3 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
-            <a href="/editprofile">
+            <a href="#">
               <button
                 type="button"
                 className="inline-flex items-center justify-center rounded-md border border-indigo-200 bg-[#22274f] px-4 py-2 text-sm font-medium text-indigo-200 shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
@@ -160,7 +200,10 @@ const Profile = () => {
                 {" "}
                 {userData?.savedBooks?.map((book) => (
                   <>
-                    <div key={book.bookId} className="overflow-hidden bg-[#22274f] shadow sm:rounded-md">
+                    <div
+                      key={book.bookId}
+                      className="overflow-hidden bg-[#22274f] shadow sm:rounded-md"
+                    >
                       <ul className="divide-y divide-gray-700">
                         <li key={book.bookId}>
                           <div className="block hover:bg-slate-800">
@@ -173,8 +216,8 @@ const Profile = () => {
                                 />
                                 <div>
                                   <h2 className="font-medium ">{book.title}</h2>
+                                  <em>{book.authors}</em>
                                   <div>
-                                    <RatingStars />
                                   </div>
                                 </div>
                                 <div className="ml-2 flex flex-col justify-evenly">
@@ -186,6 +229,16 @@ const Profile = () => {
                                   >
                                     Remove
                                   </button>
+                                  <button
+                                    className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
+                                    onClick={() => handleTrade(book.bookId)}
+                                  >
+                                      <div className="inline-flex items-center">
+                                        Available to Trade
+                                      </div>
+                                  
+                                  </button>
+                                  
                                 </div>
                               </div>
                             </div>
@@ -195,12 +248,7 @@ const Profile = () => {
                     </div>
                   </>
                 ))}
-                <a
-                  href="/search"
-                  className="cursor-pointer block bg-[#090c26] hover:bg-slate-800 px-4 py-4 text-center font-medium sm:rounded-b-lg"
-                >
-                  Add to list
-                </a>
+              
               </div>
             </div>
           </section>
@@ -217,7 +265,10 @@ const Profile = () => {
                 {" "}
                 {userData?.wishList?.map((book) => (
                   <>
-                    <div key={book.bookId} className="overflow-hidden bg-[#22274f] shadow sm:rounded-md">
+                    <div
+                      key={book.bookId}
+                      className="overflow-hidden bg-[#22274f] shadow sm:rounded-md"
+                    >
                       <ul className="divide-y divide-gray-700">
                         <li key={book.bookId}>
                           <div className="block hover:bg-slate-800">
@@ -230,8 +281,8 @@ const Profile = () => {
                                 />
                                 <div>
                                   <h2 className="font-medium ">{book.title}</h2>
+                                  <em>{book.authors}</em>
                                   <div>
-                                    <RatingStars />
                                   </div>
                                 </div>
                                 <div className="ml-2 flex flex-col justify-evenly">
@@ -245,9 +296,10 @@ const Profile = () => {
                                   </button>
                                   <button
                                     onClick={() => handleModal(book)}
-                                    className="rounded"
-                                  >
+                                    className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex justify-center"
+                                  ><div className="flex items-center justify-center">
                                     Find
+                                    </div>
                                   </button>
                                 </div>
                               </div>
@@ -258,12 +310,7 @@ const Profile = () => {
                     </div>
                   </>
                 ))}
-                <a
-                  href="/search"
-                  className="cursor-pointer block bg-[#090c26] hover:bg-slate-800 px-4 py-4 text-center font-medium sm:rounded-b-lg"
-                >
-                  Add to list
-                </a>
+           
               </div>
             </div>
           </section>
@@ -284,7 +331,10 @@ const Profile = () => {
                   })
                   .map((book) => (
                     <>
-                      <div key={book.bookId} className="overflow-hidden bg-[#22274f] shadow sm:rounded-md">
+                      <div
+                        key={book.bookId}
+                        className="overflow-hidden bg-[#22274f] shadow sm:rounded-md"
+                      >
                         <ul className="divide-y divide-gray-700">
                           <li key={book.bookId}>
                             <div className="block hover:bg-slate-800">
@@ -297,15 +347,15 @@ const Profile = () => {
                                   />
                                   <div>
                                     <h2 className="font-lg ">{book.title}</h2>
+                                    <em>{book.authors}</em>
                                     <div>
-                                      <RatingStars />
                                     </div>
                                   </div>
                                   <div className="ml-2 flex flex-col justify-evenly">
                                     <button
                                       className="inline-flex justify-center rounded font-bold py-2 px-4 rounded-full>"
                                       onClick={() =>
-                                        handleDeleteBook(book.bookId)
+                                        handleRemoveTrade(book.bookId)
                                       }
                                     >
                                       Remove
@@ -319,87 +369,11 @@ const Profile = () => {
                       </div>
                     </>
                   ))}
-                <a
-                  href="/search"
-                  className="cursor-pointer block bg-[#090c26] hover:bg-slate-800 px-4 py-4 text-center font-medium sm:rounded-b-lg"
-                >
-                  Add to list
-                </a>
+             
               </div>
             </div>
           </section>
         </div>
-        <section className="lg:col-span-1 lg:col-start-3">
-          {/* FRIENDS */}
-          {/* <div className="bg-slate-900 px-4 py-5 shadow-lg sm:rounded-lg sm:px-6">
-              <h2 className="text-4xl text-indigo-300 font-medium pb-4">
-                Friends List
-              </h2>
-
-              <FriendList
-                username={userData.username}
-                friendCount={userData.friendCount}
-                friends={userData.friends}
-              />
-
-              <div className="justify-stretch mt-6 flex flex-col">
-                {userParam && (
-                  <button
-                    type="button"
-                    className="cursor-pointer inline-flex items-center justify-center rounded-md border border-indigo-200 px-4 py-2 text-sm font-medium text-indigo-200 shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
-                  >
-                    ADD FRIENDS
-                  </button>
-                )}
-              </div>
-            </div> */}
-
-          {/* <div className="bg-slate-900 mt-8 pb-5 pt-3 shadow-lg sm:rounded-lg sm:px-6">
-              <h2 className="text-2xl tracking-widest text-center text-indigo-300 font-medium">
-                Stay in touch!
-              </h2>
-
-              <div className="columns-2 flex justify-center gap-4 mt-4">
-                <tr>
-                  <a
-                    className="bg-[#22274f] hover:bg-slate-700 rounded-md border border-indigo-200 py-2 px-4 text-base"
-                    href="https://www.instagram.com/bslockhart_arts/"
-                  >
-                    <FontAwesomeIcon
-                      icon={faInstagram}
-                      style={{ color: "a4b4fc" }}
-                    />
-                    <td>
-                      <div className="flex items-center ml-2 text-center">
-                        <div className="text-indigo-200 font-normal uppercase tracking-widest">
-                          Instagram
-                        </div>
-                      </div>
-                    </td>
-                  </a>
-                </tr>
-
-                <tr>
-                  <a
-                    className="bg-[#22274f] hover:bg-slate-700 rounded-md border border-indigo-200 py-2 px-4 text-base"
-                    href="mailto:bslockhart@uncg.edu"
-                  >
-                    <FontAwesomeIcon
-                      icon={faEnvelope}
-                      style={{ color: "a4b4fc" }}
-                    />
-                    <td>
-                      <div className="flex items-center ml-2 text-center">
-                        <div className="text-indigo-200 font-normal uppercase tracking-widest">
-                          Email
-                        </div>
-                      </div>
-                    </td>
-                  </a>
-                </tr>
-              </div>
-            </div> */}
-        </section>
       </main>
     </>
   );

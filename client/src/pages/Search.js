@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
-import RatingStars from "../components/RatingStars";
 // google books api, mongoose, auth, graphql, localstorage
 import { useMutation, useQuery } from "@apollo/client";
 import { googleBookSearch } from "../utils/API";
 import Auth from "../utils/auth";
-import { SAVE_BOOK, SAVE_WISHLIST, TOGGLE_TRADE } from "../utils/mutations";
+import { SAVE_BOOK, SAVE_WISHLIST } from "../utils/mutations";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 import { QUERY_ME_BASIC } from "../utils/queries";
 // import icons & images
-import { HiStar } from "react-icons/hi";
 
 const Search = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -18,7 +16,6 @@ const Search = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   const [saveBook] = useMutation(SAVE_BOOK);
   const [saveBookToWishlist] = useMutation(SAVE_WISHLIST);
-  const [toggleTradeBool] = useMutation(TOGGLE_TRADE);
   const { loading, data } = useQuery(QUERY_ME_BASIC);
 
   // animation effect
@@ -45,7 +42,7 @@ const Search = () => {
   }
 
   if (!user?.username) {
-    console.log(user)
+    console.log(user);
     return (
       <div className="w-full flex flex-col justify-center items-center text-center">
         <h3 className="text-5xl mb-8">Oops!</h3>
@@ -134,23 +131,6 @@ const Search = () => {
     }
   };
 
-  const handleTrade = async (bookId) => {
-    console.log(bookId)
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
-
-    try {
-      await toggleTradeBool({
-        variables: { bookId },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <>
       <div className="w-[85%] h-auto mx-auto mt-20 flex flex-col justify-center items-center">
@@ -198,9 +178,7 @@ const Search = () => {
           {searchedBooks.map((book) => {
             return (
               <div className="w-full m-4 md:w-[40%]" key={book.bookId}>
-                <div
-                  className="w-full grid grid-cols-1 md:grid-cols-none md:grid-flow-col md:auto-cols-auto bg-slate-900 p-6 rounded-lg shadow-lg"
-                >
+                <div className="w-full grid grid-cols-1 md:grid-cols-none md:grid-flow-col md:auto-cols-auto bg-slate-900 p-6 rounded-lg shadow-lg">
                   <div>
                     {book.image ? (
                       <img
@@ -248,7 +226,6 @@ const Search = () => {
                           (savedBookId) => savedBookId === book.bookId
                         ) ? (
                           <div className="inline-flex items-center">
-                          
                             Saved to Wishlist
                           </div>
                         ) : (
@@ -257,26 +234,7 @@ const Search = () => {
                           </div>
                         )}
                       </button>
-                      <button
-                        className="rounded-md border border-indigo-300 bg-[#22274f] px-4 py-2 text-sm font-medium shadow-md inline-flex items-center"
-                        onClick={() => handleTrade(book.bookId)}
-                      >
-                        {savedBookIds?.some(
-                          (savedBookId) => savedBookId === book.bookId
-                        ) ? (
-                          <div className="inline-flex items-center">
-                            Available to Trade
-                          </div>
-                        ) : (
-                          <div className="inline-flex items-center">
-                            Available to Trade
-                          </div>
-                        )}
-                      </button>
-                      {/* )} */}
                     </div>
-
-                    <RatingStars />
                   </div>
                 </div>
               </div>
