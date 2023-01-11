@@ -212,9 +212,8 @@ const Search = () => {
   
 
   return (
-    <>
 
-      <div className="w-[85%] h-auto mx-auto flex flex-col justify-center items-center">
+    <div className="w-[85%] h-auto mx-auto flex flex-col justify-center items-center">
 
         {/* Slider Start */}
 
@@ -355,7 +354,7 @@ const Search = () => {
         </div>
       </div>
       {/* END GOOGLE BOOKS API */}
-    </>
+    </div>
   );
 };
 
