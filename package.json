@@ -26,7 +26,6 @@
     "is-fullwidth-code-point": "^3.0.0",
     "lodash": "^4.17.21",
     "react-anchor-link-smooth-scroll": "^1.0.12",
-    "react-icons": "^4.7.1",
     "require-directory": "^2.1.1",
     "rxjs": "^7.5.7",
     "shell-quote": "^1.7.4",
